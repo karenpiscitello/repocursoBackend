@@ -3,9 +3,9 @@ const fs = require('fs')
 class Contenedor {
   constructor (name) {
     this.name = name
-  }
+}
 
-  async save (item) {
+  async save (prod) {
     let data
     try {
       data = await fs.promises.readFile(`./${this.name}`)
@@ -13,16 +13,16 @@ class Contenedor {
     } catch (e) {
       data = []
     }
-    const lastItem = data[data.length - 1]
+    const lastProd = data[data.length - 1]
 
     let id = 1
 
-    if (lastItem) {
-      id = lastItem.id + 1
+    if (lastProd) {
+      id = lastProd.id + 1
     }
-    item.id = id
+    prod.id = id
 
-    data.push(item)
+    data.push(prod)
 
     return fs.promises.writeFile(`./${this.name}`, JSON.stringify(data, null, 2))
   }
@@ -36,7 +36,7 @@ class Contenedor {
       data = []
     }
 
-    return data.find(item => item.id === id)
+    return data.find(prod => prod.id === id)
   }
 
   async getAll () {
